@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  php:
+    build:
+      context: ./docker/php
+      args:
+        - INSTALL_XDEBUG=${INSTALL_XDEBUG}
+        - HOST_IP=${HOST_IP}
+    ports:
+      - "9100:9100"
+    volumes:
+      - ./server:/var/www/server
+      - ./docker/php/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
+    environment:
+      - PHP_CS_FIXER_IGNORE_ENV=1
+
+  nginx:
+    image: nginx
+    ports:
+      - "8100:8100"
+    volumes:
+      - ./server:/var/www/server
+      - ./docker/nginx:/etc/nginx/conf.d:cached
+    depends_on:
+      - php

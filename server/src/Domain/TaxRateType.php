@@ -9,13 +9,13 @@ use Kudo\Domain\TaxRateRule\FreeTaxRateRule;
 use Kudo\Domain\TaxRateRule\ReducedTaxRateRule;
 use Kudo\Domain\TaxRateRule\StandardTaxRateRule;
 
-enum TaxRateType
+enum TaxRateType:int
 {
-    case STANDARD_TAX;
-    case REDUCED_TAX;
-    case TAX_FREE;
+    case STANDARD_TAX = 1;
+    case REDUCED_TAX = 2;
+    case TAX_FREE = 3;
 
-    public function string(): string
+    public function name(): string
     {
         return match($this)
         {
